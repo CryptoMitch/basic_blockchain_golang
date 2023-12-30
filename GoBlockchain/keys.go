@@ -3,10 +3,9 @@ package GoBlockchain
 import "GoBlockchain/ed25519"
 
 const (
-
 	privateKeyLen = 64
 	publicKeyLen = 32
-
+	seedLen = 32
 )
 
 // Ed25519 is an elliptic curve cryptography (ECC) algorithm that provides digital signatures. 
@@ -14,6 +13,19 @@ const (
 
 type PrivateKey struct {
 	key ed25519.PrivateKey
+}
+
+func GeneratePrivateKey() *PrivateKey{
+	// Create a byte slice 'seed' with a length of seedLen.
+	seed := make([]byte, seedLen)
+	// Use the 'rand.Reader' as a source of cryptographic randomness to fill the 'seed' slice.
+	_, err := io.ReadFull(rand.Reader, seed)
+	// Check for errors during the reading process.
+	if err != nil {
+		// If an error occurs, trigger a panic with the error message.
+    	// Panicking in this context indicates a critical failure, and the program will terminate.
+		panic(err)
+	}
 }
 
 // Bytes returns the raw bytes of the private key.
