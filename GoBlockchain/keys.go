@@ -26,6 +26,9 @@ func GeneratePrivateKey() *PrivateKey{
     	// Panicking in this context indicates a critical failure, and the program will terminate.
 		panic(err)
 	}
+	return &PrivateKey{
+		key : ed25519.NewKeyFromSeed(seed),
+	}
 }
 
 // Bytes returns the raw bytes of the private key.
